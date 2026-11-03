@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>YouTube Cookies</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="top">
+        <h1>YouTube Cookies</h1>
+        <span id="badge" class="badge">Checking…</span>
+      </header>
+
+      <p class="hint" id="hint">
+        Sign in to <strong>youtube.com</strong> in this browser, then tap <strong>Get cookies</strong>.
+      </p>
+
+      <p class="tab-hint" id="tab-hint" hidden>
+        Phone panel too narrow?
+        <a href="#" id="open-tab">Open the exporter in a tab</a>
+      </p>
+
+      <div class="actions">
+        <button id="refresh" class="primary" type="button">Get cookies</button>
+        <button id="copy" class="ghost" type="button" disabled>Copy</button>
+        <button id="download" class="ghost" type="button" disabled>Download cookies.txt</button>
+      </div>
+
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+
+      <details id="preview-wrap" class="preview" hidden>
+        <summary>Preview cookies.txt</summary>
+        <textarea id="preview" readonly rows="8" spellcheck="false"></textarea>
+      </details>
+
+      <p class="note">
+        Paste the text (or upload the file) in the downloader’s <strong>Cookie settings</strong>.
+        Cookies never leave your device except with your own download request.
+      </p>
+    </main>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>

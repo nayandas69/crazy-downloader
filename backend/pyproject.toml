@@ -1,0 +1,23 @@
+[project]
+name = "crazy-downloader-backend"
+version = "0.0.1-alpha.1"
+description = "FastAPI backend for Crazy Downloader: YouTube format extraction and streamed downloads."
+requires-python = ">=3.14"
+
+[project.urls]
+Repository = "https://github.com/nayandas69/crazy-downloader.git"
+
+[tool.ruff]
+target-version = "py314"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["."]

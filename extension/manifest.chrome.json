@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Cookies Exporter",
+  "version": "0.0.1",
+  "description": "Export your signed-in YouTube cookies as a Netscape cookies.txt for Crazy Downloader. Works on mobile browsers that support extensions.",
+  "homepage_url": "https://github.com/nayandas69/crazy-downloader/tree/main/extension",
+  "action": {
+    "default_title": "Export YouTube cookies",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png",
+      "48": "icons/icon-48.png",
+      "128": "icons/icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": ["cookies"],
+  "host_permissions": ["https://*.youtube.com/*"]
+}

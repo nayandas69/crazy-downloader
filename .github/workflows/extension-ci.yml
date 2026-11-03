@@ -1,0 +1,53 @@
+name: Extension CI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "extension/**"
+      - ".github/workflows/extension-ci.yml"
+      - ".github/workflows/extension-release.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "extension/**"
+      - ".github/workflows/extension-ci.yml"
+      - ".github/workflows/extension-release.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  extension:
+    name: Extension Test & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7.0.1
+
+      - name: Set up Node
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: "24"
+
+      - name: Run tests
+        working-directory: extension
+        run: npm test
+
+      - name: Build bundles
+        working-directory: extension
+        run: npm run build
+
+      - name: Check bundle contents
+        working-directory: extension
+        run: |
+          unzip -l dist/youtube-cookies-*-chrome.zip
+          unzip -l dist/youtube-cookies-*-firefox.zip
+
+      - name: Upload bundles
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: youtube-cookies-extension
+          path: extension/dist/*.zip
+          if-no-files-found: error
+          retention-days: 14

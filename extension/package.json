@@ -1,0 +1,16 @@
+{
+  "name": "crazy-downloader-youtube-cookies",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Mobile-friendly browser extension that exports YouTube cookies as a Netscape cookies.txt for Crazy Downloader.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nayandas69/crazy-downloader.git",
+    "directory": "extension"
+  },
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "build": "node scripts/build.mjs"
+  }
+}
