@@ -2,8 +2,8 @@
   <img src="frontend/public/images/preview.png" alt="Crazy Downloader Preview" width="800">
 </p>
 
-<h2 align="center"><b>Crazy Downloader</b>
-</h2>
+<h1 align="center"><b>Crazy Downloader</b>
+</h1>
 
 Crazy Downloader is a web app for downloading public YouTube videos. Paste a link, pick a
 format, and the file streams straight to your device — no account, no database, and nothing
