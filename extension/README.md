@@ -56,4 +56,4 @@ The build writes unpacked folders to `dist/chrome/` and `dist/firefox/`, plus `y
 | `scripts/` | Bundle and ZIP generation |
 | `tests/` | Node test suites |
 
-For issues and contributions, use the [OG](https://github.com/nayandas69/crazy-downloader/).
+For issues and contributions, use the [Crazy Downloader repository](https://github.com/nayandas69/crazy-downloader/).
