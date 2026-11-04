@@ -1,29 +1,28 @@
-## YouTube Cookies Exporter
+<p align="center">
+  <img src="https://raw.githubusercontent.com/nayandas69/crazy-downloader/main/extension/icons/icon-128.png" alt="YouTube Cookies Exporter icon" width="96">
+</p>
+<h1 align="center">YouTube Cookies Exporter 0.0.2</h1>
 
-Exports the YouTube cookies of the browser you are signed in to as a Netscape
-`cookies.txt`, ready to paste or upload into **Crazy Downloader → Cookie settings**.
+Export your YouTube cookies as a Netscape `cookies.txt` for [Crazy Downloader](https://github.com/nayandas69/crazy-downloader/).
 
-### Download
+## What's new
 
-| File | Use it for |
+- A responsive popup with clearer actions and guidance for narrow mobile panels and desktop browsers.
+- Updated installation, usage, and privacy documentation.
+
+## Get the extension
+
+- **Microsoft Edge:** Available from [Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/youtube-cookies-exporter/knddfbdekkmlkfjloijeclpapobbfjgo).
+- **Other supported browsers:** Download a bundle from the [GitHub releases page](https://github.com/nayandas69/crazy-downloader/releases/).
+
+| Asset | Use |
 | --- | --- |
-| `youtube-cookies-<version>-chrome.zip` | Chrome, Edge, Brave, Kiwi, Lemur, Orion and other Chromium/Chrome-extension browsers |
-| `youtube-cookies-<version>-firefox.zip` | Firefox (temporary add-on; sign it on addons.mozilla.org for a permanent install) |
-| `SHA256SUMS.txt` | Optional integrity check: `sha256sum -c SHA256SUMS.txt` |
+| `youtube-cookies-0.0.2-chrome.zip` | Load the unzipped folder in a compatible Chromium browser's extensions page. |
+| `youtube-cookies-0.0.2-firefox.zip` | Load `manifest.json` as a temporary Firefox desktop add-on; permanent installation requires signing. |
+| `SHA256SUMS.txt` | Verify downloaded archives with `sha256sum -c --ignore-missing SHA256SUMS.txt`. |
 
-### Install
+Mobile support and installation depend on the browser. See the [extension README](https://github.com/nayandas69/crazy-downloader/tree/main/extension) for instructions.
 
-- **Desktop Chrome / Edge / Brave:** unzip, open `chrome://extensions`, enable **Developer mode**, click **Load unpacked**, pick the unzipped folder.
-- **Chrome for Android with extension support (e.g. Kiwi, Lemur):** unzip the Chrome bundle and load it as an unpacked extension from the browser's extensions page.
-- **Firefox desktop:** unzip, open `about:debugging#/runtime/this-firefox`, **Load Temporary Add-on**, choose `manifest.json`.
-- **Firefox for Android:** Firefox only installs signed add-ons; sign the bundle at <https://addons.mozilla.org/developers/> and install the resulting `.xpi`.
-- **iOS (Orion):** Orion supports Chrome extensions — install the Chrome bundle through its extensions settings.
+## Use
 
-### Use
-
-1. Sign in to **youtube.com** in the same browser.
-2. Open the extension and tap **Get cookies**. It reads `youtube.com` cookies through the browser's cookie API, so the `HttpOnly` session cookies a page script cannot see are included.
-3. Tap **Copy** or **Download cookies.txt**.
-4. In Crazy Downloader, open **Cookie settings** and paste the text or upload the file — the pending search then retries automatically.
-
-Cookies are read locally, never uploaded anywhere; the downloader sends them only with your own request.
+Sign in to YouTube in the extension's browser, open the popup, and copy or download the cookies. In Crazy Downloader, open **Cookie settings** and paste or upload the export. The extension processes cookies locally; the app sends saved cookies to its backend for your requests. Keep exports private, as they can contain an active session. Read the [privacy policy](https://github.com/nayandas69/crazy-downloader/blob/main/extension/PRIVACY.md).

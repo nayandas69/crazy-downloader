@@ -3,41 +3,55 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>YouTube Cookies</title>
+    <title>YouTube Cookies Exporter</title>
     <link rel="stylesheet" href="popup.css" />
   </head>
   <body>
     <main class="app">
       <header class="top">
-        <h1>YouTube Cookies</h1>
-        <span id="badge" class="badge">Checking…</span>
+        <img class="logo" src="icons/icon-48.png" width="48" height="48" alt="" />
+        <div class="heading">
+          <p class="eyebrow">Crazy Downloader</p>
+          <h1>YouTube Cookies</h1>
+        </div>
       </header>
 
-      <p class="hint" id="hint">
-        Sign in to <strong>youtube.com</strong> in this browser, then tap <strong>Get cookies</strong>.
-      </p>
-
-      <p class="tab-hint" id="tab-hint" hidden>
-        Phone panel too narrow?
-        <a href="#" id="open-tab">Open the exporter in a tab</a>
-      </p>
+      <section class="intro" aria-labelledby="export-title">
+        <div class="intro-top">
+          <h2 id="export-title">Export your session</h2>
+          <span id="badge" class="badge">Checking…</span>
+        </div>
+        <p class="hint" id="hint">
+          Sign in to <strong>youtube.com</strong> in this browser, then get your cookies below.
+        </p>
+      </section>
 
       <div class="actions">
-        <button id="refresh" class="primary" type="button">Get cookies</button>
-        <button id="copy" class="ghost" type="button" disabled>Copy</button>
-        <button id="download" class="ghost" type="button" disabled>Download cookies.txt</button>
+        <button id="refresh" class="primary" type="button">Get cookies <span aria-hidden="true">↻</span></button>
+        <div class="secondary-actions">
+          <button id="copy" class="secondary" type="button" disabled>Copy</button>
+          <button id="download" class="secondary" type="button" disabled>Download cookies.txt</button>
+        </div>
       </div>
 
       <p id="message" class="message" role="status" aria-live="polite"></p>
 
       <details id="preview-wrap" class="preview" hidden>
         <summary>Preview cookies.txt</summary>
-        <textarea id="preview" readonly rows="8" spellcheck="false"></textarea>
+        <textarea id="preview" aria-label="Cookies text preview" readonly rows="8" spellcheck="false"></textarea>
       </details>
 
-      <p class="note">
-        Paste the text (or upload the file) in the downloader’s <strong>Cookie settings</strong>.
-        Cookies never leave your device except with your own download request.
+      <section class="next-step" aria-labelledby="next-title">
+        <div class="step-number" aria-hidden="true">↗</div>
+        <div>
+          <h2 id="next-title">Next, in Crazy Downloader</h2>
+          <p>Open <strong>Cookie settings</strong>, then paste the text or upload the file.</p>
+        </div>
+      </section>
+
+      <p class="note">The extension processes your export locally. If you use it with Crazy Downloader, the app sends your cookies to its configured backend for format and download requests. Keep it private: cookies can give access to your account.</p>
+      <p class="tab-hint" id="tab-hint" hidden>
+        <a href="#" id="open-tab">Open in a tab</a>
       </p>
     </main>
     <script type="module" src="popup.js"></script>
