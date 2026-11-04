@@ -19,10 +19,9 @@ to confirm you are not a bot, or for age-restricted videos.
 | --- | --- | --- |
 | Backend (API) | **0.0.1-alpha.1** | `backend/pyproject.toml`, `backend/app/main.py` |
 | Frontend (web app) | **0.0.1-alpha.1** | `frontend/package.json` |
-| Browser extension | **0.0.1** | `extension/package.json`, both manifests |
+| Browser extension | **0.0.2** | `extension/package.json`, both manifests |
 
-The extension ships as `0.0.1`: browser manifests only accept numeric versions, so the first
-alpha release carries the numeric part of `0.0.1-alpha.1`.
+The extension uses its own numeric version, as required by browser manifests.
 
 The API reports its version at `/api`, in the OpenAPI schema at `/api/openapi.json`, and in the
 interactive docs at `/api/docs`.

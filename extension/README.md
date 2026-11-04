@@ -1,101 +1,59 @@
 <p align="center">
-  <img src="icons/icon-128.png" alt="popup" width="128">
+  <img src="icons/icon-128.png" alt="YouTube Cookies Exporter icon" width="96">
 </p>
+<h1 align="center">YouTube Cookies Exporter</h1>
 
-<h2 align="center"><b>YouTube Cookies Exporter</b></h2>
+Export your own YouTube cookies as a Netscape `cookies.txt` file for [Crazy Downloader](https://github.com/nayandas69/crazy-downloader/). The extension is useful when YouTube asks the downloader to verify your session. It is for people using Crazy Downloader in a browser that supports extensions.
 
-A popup-only browser extension that exports your signed-in **youtube.com** cookies as a Netscape
-`cookies.txt` — the format Crazy Downloader's cookie box accepts.
+## Install
 
-The cookies that prove you are signed in (`SID`, `LOGIN_INFO`, …) are `HttpOnly`. A page script,
-including the app's own "Auto-detect" button, can never read them. The browser's `cookies` API can,
-and an extension is the only thing that gets access to it.
+- **Microsoft Edge:** Install [YouTube Cookies Exporter from Microsoft Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/youtube-cookies-exporter/knddfbdekkmlkfjloijeclpapobbfjgo).
+- **Release bundles:** Download the Chrome or Firefox bundle from the [GitHub releases page](https://github.com/nayandas69/crazy-downloader/releases/). Unzip it before loading it manually.
+  - For Chrome, Edge, or another compatible Chromium browser, open its extensions page, enable developer mode, and load the unzipped Chrome bundle as an unpacked extension.
+  - For Firefox desktop, open `about:debugging#/runtime/this-firefox`, choose **Load Temporary Add-on**, and select the Firefox bundle's `manifest.json`. A temporary add-on is removed when Firefox closes. Permanent installation requires a signed add-on.
 
-[![Extension CI](https://github.com/nayandas69/crazy-downloader/actions/workflows/extension-ci.yml/badge.svg)](https://github.com/nayandas69/crazy-downloader/actions/workflows/extension-ci.yml)
+On mobile, extension availability and installation methods depend on the browser and platform. Use a browser that supports the corresponding extension format; standard mobile browsers may not support installing these bundles. Consult the browser's installation instructions.
 
-[![Extension Release](https://github.com/nayandas69/crazy-downloader/actions/workflows/extension-release.yml/badge.svg)](https://github.com/nayandas69/crazy-downloader/actions/workflows/extension-release.yml)
+## Use with Crazy Downloader
 
-## What it does
+1. Sign in to [YouTube](https://www.youtube.com/) in the same browser and profile as the extension.
+2. Open the extension. It checks YouTube cookies when the popup opens; select **Get cookies** to check again after signing in.
+3. Select **Copy** or **Download cookies.txt**. You can expand the preview to inspect the text. If clipboard access fails, select the preview text and copy it manually.
+4. In Crazy Downloader, open **Cookie settings**, paste the text or upload the file, and save it. If the app was waiting for cookies after a failed search, it retries that search.
 
-1. Reads the browser's YouTube cookies through `chrome.cookies` / `browser.cookies`.
-2. Converts them to Netscape lines (seven tab-separated fields), prefixing `HttpOnly` cookies with
-   `#HttpOnly_` so yt-dlp treats them as real cookies rather than comments.
-3. Lets you **Copy** the text, **Download cookies.txt**, or inspect it in a preview.
-4. Reports how many cookies it found and whether a signed-in session is present.
+The popup adapts to narrow panels. In a narrow panel, **Open in a tab** is also available. If no signed-in session is found, sign in to YouTube and select **Get cookies** again. A session indication is based on cookie names and does not guarantee that YouTube will accept the cookies; export again if they expire or are rejected.
 
-Nothing leaves the device during export.
+## How it works
 
-## Layout
+The browser's cookies API reads cookies for `youtube.com` and its subdomains, including `HttpOnly` session cookies that a normal web page cannot read. The extension converts them to the seven-field Netscape format, preserving `#HttpOnly_` markers for yt-dlp. It does not send the export to a server.
 
-```
-extension/
-├── manifest.chrome.json    MV3 manifest (Chrome, Edge, Brave, Kiwi, Lemur, Orion)
-├── manifest.firefox.json   MV3 manifest + gecko id (Firefox, Firefox Android)
-├── src/
-│   ├── popup.html/js/css   the whole UI
-│   └── cookies.js          pure cookie → Netscape conversion (unit-tested)
-├── scripts/
-│   ├── build.mjs           builds dist/chrome, dist/firefox and the release zips
-│   └── zip.mjs             dependency-free ZIP writer
-├── tests/                  node:test suites
-└── icons/                  extension icons (16, 32, 48, 128 px)
-```
+You choose whether to copy or download the text and provide it to Crazy Downloader. The app stores saved cookies in its browser's `localStorage`, sends them to its backend in the `X-Cookies` request header for format and download requests, and uses them for the requested YouTube operation. The backend deletes its temporary cookie file after extraction. Use **Remove** in Cookie settings to remove the app's saved copy; delete any downloaded file separately. See the [privacy policy](PRIVACY.md) for details.
 
-There are no npm dependencies and no bundler: the source is plain ES modules, so what you read is
-what ships. The build copies files and injects the version.
+**Treat exported cookies like a password.** They can contain an active session. Do not share them, and remove copies you no longer need.
 
-## Develop
+## Permissions
+
+- `cookies`: access the browser cookie store through the extension API.
+- `https://*.youtube.com/*`: restrict cookie access to YouTube and its subdomains.
+
+## Development and releases
+
+The extension uses plain ES modules and has no npm dependencies. Node.js 24 is used in CI.
 
 ```bash
 cd extension
-npm test          # node --test tests/*.test.js
-npm run build     # writes dist/ + dist/youtube-cookies-<version>-<target>.zip
+npm test
+npm run build
 ```
 
-`npm run build` produces:
+The build writes unpacked folders to `dist/chrome/` and `dist/firefox/`, plus `youtube-cookies-<version>-chrome.zip` and `youtube-cookies-<version>-firefox.zip`. The package version is injected into both built manifests. Tests cover cookie conversion, manifests, popup behavior, and release workflow steps. Release assets also include `SHA256SUMS.txt` for checking the downloaded archives.
 
-```
-dist/chrome/                               load-unpacked folder
-dist/firefox/                              load-unpacked folder
-dist/youtube-cookies-<version>-chrome.zip
-dist/youtube-cookies-<version>-firefox.zip
-```
+| Path | Purpose |
+| --- | --- |
+| `src/` | Popup and cookie conversion |
+| `manifest.chrome.json`, `manifest.firefox.json` | Browser permissions and extension metadata |
+| `icons/` | Extension icons |
+| `scripts/` | Bundle and ZIP generation |
+| `tests/` | Node test suites |
 
-Load `dist/chrome` as an unpacked extension (`chrome://extensions` → Developer mode → Load
-unpacked), or load `dist/firefox/manifest.json` through `about:debugging#/runtime/this-firefox` →
-**Load Temporary Add-on**.
-
-The tests cover the pure conversion helpers (`cookies.test.js`), both manifests
-(`manifest.test.js`), the popup wiring against a fake DOM and `chrome` API (`popup.test.js`), and the
-release workflow's shell steps (`release.test.js`).
-
-## Use
-
-1. Sign in to **youtube.com** in the same browser.
-2. Open the popup and tap **Get cookies**.
-3. Tap **Copy** or **Download cookies.txt**.
-4. In Crazy Downloader, open **Cookie settings** and paste the text or upload the file. The pending
-   search retries automatically; otherwise the cookies are saved for the next request.
-
-If the popup opens in a very narrow side panel on mobile, tap **Open the exporter in a tab**; the
-same page then uses the full screen width.
-
-## Mobile browsers
-
-A phone browser can only run this extension if it supports extensions at all:
-
-| Platform | Browser | Notes |
-| --- | --- | --- |
-| Android | Kiwi, Lemur (Chromium with extension support) | Load the Chrome bundle as an unpacked extension. |
-| Android | Firefox | Only signed add-ons install; publish the Firefox bundle on addons.mozilla.org (unlisted is fine) and install the `.xpi`. |
-| iOS / iPadOS | Orion | Installs Chrome extensions from its extensions settings. |
-| Any phone | Chrome / Safari | **No extension support** — export `cookies.txt` once on a computer and send the file to the phone. |
-
-## Permissions and privacy
-
-- `cookies` — read the browser's cookie store.
-- `https://*.youtube.com/*` — the only sites the cookie API is queried for.
-
-The export happens locally: no network request is made, nothing is uploaded, and the text stays in
-the popup until you copy or download it. Crazy Downloader then sends those cookies only with your
-own requests.
+For issues and contributions, use the [OG](https://github.com/nayandas69/crazy-downloader/).

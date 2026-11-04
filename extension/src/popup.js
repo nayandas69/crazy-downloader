@@ -105,10 +105,10 @@ async function loadCookies() {
     downloadButton.disabled = false;
 
     if (signedIn) {
-      setBadge(`${total} cookies`, "ok");
+      setBadge(`${total} ${total === 1 ? "cookie" : "cookies"}`, "ok");
       setMessage("Signed-in YouTube session found. Copy or download it, then paste it in the app.", "ok");
     } else {
-      setBadge(`${total} cookies`, "warn");
+      setBadge(`${total} ${total === 1 ? "cookie" : "cookies"}`, "warn");
       setMessage(
         "Cookies found, but no signed-in session. Sign in to youtube.com in this browser first if YouTube asks to confirm you’re not a bot.",
         ""
@@ -128,16 +128,13 @@ refreshButton.addEventListener("click", loadCookies);
 copyButton.addEventListener("click", copy);
 downloadButton.addEventListener("click", download);
 
-// Mobile browsers (e.g. Lemur) open the popup in a very narrow side panel.
-// The same page works as a regular tab, where it gets the full screen width.
+// Offer the tab as an optional alternative in narrow browser panels.
 const tabHint = document.getElementById("tab-hint");
 const openTabLink = document.getElementById("open-tab");
 
 function showTabHint() {
   if (!tabHint) return;
   const width = globalThis.innerWidth ?? 0;
-  // Below this width the browser is drawing the popup in a narrow side panel,
-  // where the full-width exporter page is much easier to use on a phone.
   tabHint.hidden = !(width > 0 && width < 360);
 }
 
@@ -154,5 +151,6 @@ if (openTabLink) {
 }
 
 showTabHint();
+globalThis.addEventListener?.("resize", showTabHint);
 
 void loadCookies();
