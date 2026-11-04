@@ -19,7 +19,7 @@ Export your YouTube cookies as a Netscape `cookies.txt` for [Crazy Downloader](h
 | --- | --- |
 | `youtube-cookies-0.0.2-chrome.zip` | Load the unzipped folder in a compatible Chromium browser's extensions page. |
 | `youtube-cookies-0.0.2-firefox.zip` | Load `manifest.json` as a temporary Firefox desktop add-on; permanent installation requires signing. |
-| `SHA256SUMS.txt` | Verify downloaded archives with `sha256sum -c SHA256SUMS.txt`. |
+| `SHA256SUMS.txt` | Verify downloaded archives with `sha256sum -c --ignore-missing SHA256SUMS.txt`. |
 
 Mobile support and installation depend on the browser. See the [extension README](https://github.com/nayandas69/crazy-downloader/tree/main/extension) for instructions.
 
