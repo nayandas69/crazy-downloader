@@ -4,6 +4,7 @@ on:
   push:
     tags:
       - "v*"
+      - "!v*-GHCR"
   workflow_dispatch:
     inputs:
       tag:
