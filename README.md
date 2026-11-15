@@ -18,6 +18,8 @@ to confirm you are not a bot, or for age-restricted videos.
 
 [![Extension Release](https://github.com/nayandas69/crazy-downloader/actions/workflows/extension-release.yml/badge.svg)](https://github.com/nayandas69/crazy-downloader/actions/workflows/extension-release.yml)
 
+[![Publish Docker Image](https://github.com/nayandas69/crazy-downloader/actions/workflows/ghcr-publish.yml/badge.svg)](https://github.com/nayandas69/crazy-downloader/actions/workflows/ghcr-publish.yml)
+
 ## Versions
 
 | Component | Version | Source of truth |
