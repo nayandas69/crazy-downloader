@@ -6,6 +6,14 @@ interface Props {
   loading: boolean;
 }
 
+// Validation accepts scheme-less links, but the API only takes absolute URLs.
+// Add https:// here so both sides agree on what a valid link is (issue #2).
+export const normalizeYouTubeUrl = (val: string) => {
+  const trimmed = val.trim();
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(trimmed)) return trimmed;
+  return `https://${trimmed.replace(/^\/\//, "")}`;
+};
+
 export default function UrlInput({ onSubmit, loading }: Props) {
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
@@ -19,12 +27,13 @@ export default function UrlInput({ onSubmit, loading }: Props) {
       setError("Please paste a YouTube URL.");
       return;
     }
-    if (!isValidYouTubeUrl(url)) {
+    const normalizedUrl = normalizeYouTubeUrl(url);
+    if (!isValidYouTubeUrl(normalizedUrl)) {
       setError("That doesn't look like a valid YouTube URL.");
       return;
     }
     setError("");
-    onSubmit(url.trim());
+    onSubmit(normalizedUrl);
   };
 
   const handleClear = () => {

@@ -62,6 +62,18 @@ describe("download flow", () => {
     expect(screen.getAllByRole("button", { name: /download/i })).toHaveLength(2);
     expect(getFormats).toHaveBeenCalledWith("https://youtu.be/example");
   });
+  it("normalizes a scheme-less link before requesting formats (issue #2)", async () => {
+    const getFormats = vi.spyOn(api, "getFormats").mockResolvedValue(info);
+    const user = userEvent.setup();
+    render(<Home />);
+    await user.type(
+      screen.getByLabelText("YouTube video link"),
+      "www.youtube.com/watch?v=BPZkZpGMpXA"
+    );
+    await user.click(screen.getByRole("button", { name: /get formats/i }));
+    expect(await screen.findByText("Example video")).toBeInTheDocument();
+    expect(getFormats).toHaveBeenCalledWith("https://www.youtube.com/watch?v=BPZkZpGMpXA");
+  });
   it("announces loading outside the busy section and keeps help available", async () => {
     let finish!: (value: VideoInfo) => void;
     vi.spyOn(api, "getFormats").mockReturnValue(
