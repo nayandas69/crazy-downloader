@@ -46,12 +46,30 @@ describe("UrlInput", () => {
     expect(onSubmit).toHaveBeenCalledWith("https://www.youtube.com/watch?v=BPZkZpGMpXA");
   });
 
-  it("still rejects a link that is not YouTube", async () => {
+  it("submits a protocol-relative link with https://", async () => {
     const onSubmit = vi.fn();
     const user = userEvent.setup();
     render(<UrlInput onSubmit={onSubmit} loading={false} />);
 
-    await user.type(screen.getByRole("textbox"), "example.com/video");
+    await user.type(screen.getByRole("textbox"), "  //youtu.be/BPZkZpGMpXA  ");
+    await user.click(screen.getByRole("button", { name: /get formats/i }));
+
+    expect(onSubmit).toHaveBeenCalledExactlyOnceWith("https://youtu.be/BPZkZpGMpXA");
+    expect(
+      screen.queryByText("That doesn't look like a valid YouTube URL.")
+    ).not.toBeInTheDocument();
+  });
+
+  it.each([
+    "example.com/video",
+    "ftp://youtube.com/watch?v=BPZkZpGMpXA",
+    "///youtube.com/watch?v=BPZkZpGMpXA",
+  ])("still rejects an invalid link: %s", async (url) => {
+    const onSubmit = vi.fn();
+    const user = userEvent.setup();
+    render(<UrlInput onSubmit={onSubmit} loading={false} />);
+
+    await user.type(screen.getByRole("textbox"), url);
     await user.click(screen.getByRole("button", { name: /get formats/i }));
 
     expect(onSubmit).not.toHaveBeenCalled();

@@ -27,12 +27,13 @@ export default function UrlInput({ onSubmit, loading }: Props) {
       setError("Please paste a YouTube URL.");
       return;
     }
-    if (!isValidYouTubeUrl(url)) {
+    const normalizedUrl = normalizeYouTubeUrl(url);
+    if (!isValidYouTubeUrl(normalizedUrl)) {
       setError("That doesn't look like a valid YouTube URL.");
       return;
     }
     setError("");
-    onSubmit(normalizeYouTubeUrl(url));
+    onSubmit(normalizedUrl);
   };
 
   const handleClear = () => {
